@@ -1,7 +1,2 @@
-﻿cd "C:\Users\admin\Documents\SerialPortActiveXControl"
-
-C:\Windows\SysWOW64\regsvr32.exe SerialPortActiveXControl.dll 
-
-cd "C:\Users\admin\Documents\SerialPortActiveXControl"
-C:\Windows\Microsoft.NET\Framework\v4.0.30319\regasm.exe /unregister SerialPortActiveXControl.dll 
-C:\Windows\Microsoft.NET\Framework\v4.0.30319\regasm.exe /codebase /tlb SerialPortActiveXControl.dll 
+cd "C:\Mach3\GCConverter"
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\regasm.exe /codebase /tlb SerialPortAxControl.dll
