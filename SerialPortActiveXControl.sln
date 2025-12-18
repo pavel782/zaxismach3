@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33712.159
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialPortAxControl", "SerialPortActiveXControl\SerialPortAxControl.csproj", "{36B25B1F-B97D-46B0-89C7-32EDF6B2DBDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAx", "TestAx\TestAx.csproj", "{084B351E-880C-4F7B-A7BD-B2C0E1F17466}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialPortServer", "SerialPortServer\SerialPortServer.csproj", "{1F6E4EA2-2043-41BA-9339-988F9769EDDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GCodeConverter", "GCodeConverter\GCodeConverter.csproj", "{0580A905-124D-4D42-AA3D-550AF9A3B59E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{36B25B1F-B97D-46B0-89C7-32EDF6B2DBDA}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{36B25B1F-B97D-46B0-89C7-32EDF6B2DBDA}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{36B25B1F-B97D-46B0-89C7-32EDF6B2DBDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36B25B1F-B97D-46B0-89C7-32EDF6B2DBDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{084B351E-880C-4F7B-A7BD-B2C0E1F17466}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{084B351E-880C-4F7B-A7BD-B2C0E1F17466}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{084B351E-880C-4F7B-A7BD-B2C0E1F17466}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{084B351E-880C-4F7B-A7BD-B2C0E1F17466}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F6E4EA2-2043-41BA-9339-988F9769EDDF}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{1F6E4EA2-2043-41BA-9339-988F9769EDDF}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{1F6E4EA2-2043-41BA-9339-988F9769EDDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F6E4EA2-2043-41BA-9339-988F9769EDDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0580A905-124D-4D42-AA3D-550AF9A3B59E}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{0580A905-124D-4D42-AA3D-550AF9A3B59E}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{0580A905-124D-4D42-AA3D-550AF9A3B59E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0580A905-124D-4D42-AA3D-550AF9A3B59E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BAEBB2A9-D8C4-46EA-A0D2-3E27E13E2560}
+	EndGlobalSection
+EndGlobal
