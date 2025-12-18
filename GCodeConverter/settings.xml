@@ -7,9 +7,9 @@
 	<EnableJoystick>false</EnableJoystick>
 	<ArduinoConfigureJoystickCommand>SETJS;Z;true;2;true;10;10;true;15;</ArduinoConfigureJoystickCommand>
 	<DisablePluginMacrosList>T;</DisablePluginMacrosList>
-	<OpenGCodeFileInitialDirectory>C:\Users\admin\Documents\</OpenGCodeFileInitialDirectory>
-	<SaveGCodeFileInitialDirectory>C:\Users\admin\Documents\0</SaveGCodeFileInitialDirectory>
-	<SaveMacrosInitialDirectory>C:\Users\admin\Documents\1</SaveMacrosInitialDirectory>
+	<OpenGCodeFileInitialDirectory></OpenGCodeFileInitialDirectory>
+	<SaveGCodeFileInitialDirectory></SaveGCodeFileInitialDirectory>
+	<SaveMacrosInitialDirectory></SaveMacrosInitialDirectory>
 	<_Axis>
 		<AxisSettings>
 			<AxisName>Z</AxisName>
@@ -33,4 +33,5 @@
 			<ReplaceAxis>false</ReplaceAxis>
 		</AxisSettings>
 	</_Axis>
+
 </Settings>
