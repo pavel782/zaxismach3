@@ -8,7 +8,8 @@ Used hardware:
 
 -one joystick ky-023
 
-Software Requirements: windows 10(versions 7,8,11 not tested), .net 4.8, mach3(i tested version mach3.41)
+Software Requirements: windows 10(versions 7,8,11 not tested), .net 4.8, mach3(i tested version mach3.41). IDE development: vs2022 
+
 This plugin allow add new axis with arduino commands or replace existing cnc axis(x,y,z,s,etc) to arduino commands in gcode under mach3 gcode engine. Replaced gcode commands – g1,g0,move, on arduino these commands executed like linear move without any interpolation, z axis better suit for this .  
 
 All axis defined in settings.xml file. Description for each xml field located in file /GCodeConverter/settings-description.xml
