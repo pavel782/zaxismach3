@@ -1,1 +1,36 @@
-
+<?xml version="1.0"?>
+<Settings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<PortName>COM9</PortName>
+	<BaudRate>115200</BaudRate>
+	<EnableLog>true</EnableLog>
+	<LogFolderPath></LogFolderPath>
+	<EnableJoystick>false</EnableJoystick>
+	<ArduinoConfigureJoystickCommand>SETJS;Z;true;2;true;10;10;true;15;</ArduinoConfigureJoystickCommand>
+	<DisablePluginMacrosList>T;</DisablePluginMacrosList>
+	<OpenGCodeFileInitialDirectory>C:\Users\admin\Documents\</OpenGCodeFileInitialDirectory>
+	<SaveGCodeFileInitialDirectory>C:\Users\admin\Documents\0</SaveGCodeFileInitialDirectory>
+	<SaveMacrosInitialDirectory>C:\Users\admin\Documents\1</SaveMacrosInitialDirectory>
+	<_Axis>
+		<AxisSettings>
+			<AxisName>Z</AxisName>
+			<AxisType>StepMotor</AxisType>
+			<Disabled>false</Disabled>
+			<InverseMove>false</InverseMove>
+			<CountStepsPerMm>240</CountStepsPerMm>
+			<MinDistanceToMove>0.01</MinDistanceToMove>
+			<Speed>50</Speed>
+			<G0Speed>50</G0Speed>
+			<MaxSpeed>240</MaxSpeed>
+			<StartPos>0</StartPos>
+			<CurPositionNotifyPeriod>300</CurPositionNotifyPeriod>
+			<AxisMaxValue>20</AxisMaxValue>
+			<AxisMinValue>-15</AxisMinValue>
+			<MoveResponseTimeout>10000</MoveResponseTimeout>
+			<Mach3VariableStartIndex>8</Mach3VariableStartIndex>
+			<Mach3OemDro>31</Mach3OemDro>
+			<Mach3OemDroMultiplier>1000</Mach3OemDroMultiplier>
+			<EnableEstopOnError>true</EnableEstopOnError>
+			<ReplaceAxis>false</ReplaceAxis>
+		</AxisSettings>
+	</_Axis>
+</Settings>
