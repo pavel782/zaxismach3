@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<Settings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <PortName>COM4</PortName><!--arduino serial port name-->
+  <BaudRate>115200</BaudRate><!--arduino serial port baud rate-->
+  <EnableLog>true</EnableLog><!--true/false if enable/disable logging-->
+  <LogFolderPath></LogFolderPath><!--Log folder for Info/Errors log files, if empty then used Mach3 subfolder Mach3\GCConverter\Logs-->
+  <EnableJoystick>false</EnableJoystick><!--allow use 5 pin, 2 axis joystick kj-23 for move axis-->
+  <ArduinoConfigureJoystickCommand>SETJS;true;1;true;10;10;15;</ArduinoConfigureJoystickCommand><!--arduino command which configure joystick-->
+  <DisablePluginMacrosList>T;</DisablePluginMacrosList><!--list of macroses which cause troubles for this plugin-->
+  <OpenGCodeFileInitialDirectory>C:\Users\admin\Documents</OpenGCodeFileInitialDirectory><!--dont change-->
+  <SaveGCodeFileInitialDirectory>C:\Users\admin\Documents\GCode</SaveGCodeFileInitialDirectory><!--dont change-->
+  <SaveMacrosInitialDirectory>C:\Mach3.41\macros\Mach3Mill</SaveMacrosInitialDirectory><!--dont change-->
+  <_Axis>
+    <AxisSettings>
+      <AxisName>Z</AxisName><!--axis name, one symbol of A-Z-->
+      <AxisType>StepMotor</AxisType><!--always StepMotor-->
+      <Disabled>false</Disabled><!--true if axis not used in cnc processing and gcode conversion-->
+      <InverseMove>false</InverseMove><!--inverse rotation motor-->
+      <CountStepsPerMm>240</CountStepsPerMm><!--Count rotated steps of stepmotor/with ballscrew for move to 1 mm, this info can be copied from mach3->Config->Motor tuning menu-->
+      <MinDistanceToMove>0.01</MinDistanceToMove><!--min distance in mm when motor rotates, no less than one step, command with less distance will be skipped-->
+      <Speed>50</Speed><!--axis speed mm per minute by default-->
+      <G0Speed>100</G0Speed><!--axis speed mm per minute for G0 command, jiggle move-->
+      <MaxSpeed>240</MaxSpeed><!--max speed mm per minute limit feed speed from gcode file-->
+      <StartPos>0</StartPos><!--axis start position in steps-->
+      <CurPositionNotifyPeriod>300</CurPositionNotifyPeriod><!--period of moved position notification-->
+      <AxisMaxValue>20</AxisMaxValue><!--max value of axis in mm-->
+      <AxisMinValue>-15</AxisMinValue><!--min value of axis in mm-->
+      <MoveResponseTimeout>10000</MoveResponseTimeout><!--timeout for move axis, it will be added to calculated timeout dt = distance in steps / speed in steps per sec-->
+      <Mach3VariableStartIndex>8</Mach3VariableStartIndex><!--dont change-->
+      <Mach3OemDro>31</Mach3OemDro><!--mach3 oem dro - it is mach3 number of text label where axis changes can be seen during motion(this label with axis updated with period=ReportCurPosPeriod). Oem dro number = 1 - 836. Oem dro 31 is label from mach3 tab Settings, Encoder Z -->
+      <Mach3OemDroMultiplier>1000</Mach3OemDroMultiplier><!--multiply oemdro axis position to this value, used when mach3 truncate axis position to integer and show only integer part of axis position. Ie with multiplier = 1000, the last 3 digits will be fractional part of axis position in mm-->
+      <EnableEstopOnError>true</EnableEstopOnError><!--if true then generate press Mach3 EStop button, when error occured in macros-->
+      <ReplaceAxis>false</ReplaceAxis><!--true if current axis in gcode must be replaced by macros eqvivalent, false if macros eqvivalent added after original move axis line(it is used for see axis changes in Mach3 UI)-->
+    </AxisSettings>
+  </_Axis>
+</Settings>

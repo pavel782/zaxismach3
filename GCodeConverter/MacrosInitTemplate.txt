@@ -1,0 +1,166 @@
+﻿const MachMsgTypeOK = 0
+const MachMsgTypeOKCancel = 1
+const MachMsgTypeAbortRetryIgnore = 2
+const MachMsgTypeYesNoCancel = 3
+const MachMsgTypeYesNo = 4
+const MachMsgTypeRetryCancel = 5
+const MachMsgTypeCancelTryAgainContinue = 6
+
+const MachMsgReturnOK = 1
+const MachMsgReturnCancel = 2
+const MachMsgReturnAbort = 3
+const MachMsgReturnRetry = 4
+const MachMsgReturnIgnore = 5
+const MachMsgReturnYes = 6
+const MachMsgReturnNo = 7
+const MachMsgReturnTryAgain = 10
+const MachMsgReturnContinue = 11
+
+Dim mach3AxisCurPosStartIndex, mach3CommonVariablesStartIndex, mach3AxisVariablesStartIndex, spindleSwitch, showPositionSwitch, enableJs, jsAxisIndex, disableJs, enablePlugin
+mach3AxisCurPosStartIndex =  {6}
+mach3CommonVariablesStartIndex = {7}
+mach3AxisVariablesStartIndex = {8}
+
+showPositionSwitch =  GetVar(mach3CommonVariablesStartIndex + 3)
+enableJs = GetVar(mach3CommonVariablesStartIndex + 4)
+jsAxisIndex = GetVar(mach3CommonVariablesStartIndex + 5)
+spindleSwitch = GetVar(mach3CommonVariablesStartIndex + 6)
+enablePlugin = GetVar(mach3CommonVariablesStartIndex + 7)
+
+if (enablePlugin <> 1 or spindleSwitch = 1 or showPositionSwitch = 1 or enableJs > 0) then
+  if (spindleSwitch = 1 or enablePlugin <> 1) then
+    SetVar(mach3CommonVariablesStartIndex + 6, 0)
+    DoSpinCCW()
+  end if
+  if (showPositionSwitch = 1) then
+    SetVar(mach3CommonVariablesStartIndex + 3, 0)
+    Dim serialPortAx2, curPos
+    Set serialPortAx2 = CreateObject("SerialPortAxControl.SerialPortAxControl")
+    serialPortAx2.SetCacheKey "cacheKey00"
+    curPos = serialPortAx2.GetCurPosition(GetVar(mach3CommonVariablesStartIndex))
+    if (curPos < 10000) then
+      MachMsg("Axis Current position=" & curPos,  "Info", 0)
+    else
+      MachMsg("Error.",  "Error", 0)
+    end if
+  end if
+  if (enableJs=1 or enableJs=2) then
+    SetVar(mach3CommonVariablesStartIndex + 4, 0)
+    Dim serialPortAx3, errMes2
+    Set serialPortAx3 = CreateObject("SerialPortAxControl.SerialPortAxControl")
+    serialPortAx3.SetCacheKey "cacheKey00"
+    if (enableJs=1) then
+      errMes2 = serialPortAx3.EnableJoystick(jsAxisIndex, false)
+    else
+      errMes2 = serialPortAx3.EnableJoystick(0, true)
+    end if
+    if (errMes2 <> "OK") then
+      MachMsg("Cant run joystick command, error=" & errMes2,  "Error", 0)
+    end if
+  end if
+else
+  Dim serialPortAx, arduinoComPort, arduinoBaudRate, errorMsg, dlgResult, commonVariablesOffset, cacheKey
+  Dim axisSet, axisCount, axisVariablesCount, moveMacrosVariablesCount, base_i, axis_i
+  Dim axis, stepsPerMm, speed, curPosCPeriod, estop, moveTimeout, droNumber, droMultiplier, startPos, startPosValue, estopValue, curPosNPeriod, inverse, inverseValue, g0speed, axisMinValue, axisMaxValue
+    
+{0}
+
+  axisCount = {1}
+  axisVariablesCount = {2}
+  moveMacrosVariablesCount = {3}
+  'axis stepsPerMm speed curPosCPeriod estop moveTimeout droNumber droMultiplier startPos curPosNPeriod inverse g0speed axisMinValue axisMaxValue
+  axis = 0  
+  stepsPerMm = 1
+  speed = 2
+  curPosCheckPeriod = 3
+  estop = 4
+  moveTimeout = 5
+  droNumber = 6
+  droMultiplier = 7
+  startPos = 8
+  curPosNPeriod = 9
+  inverse = 10
+  g0speed = 11
+  axisMinValue = 12
+  axisMaxValue = 13  
+  Set arduinoComPort = ""'{4}
+  arduinoBaudRate = 0'{5}
+  Set cacheKey = "cacheKey00"
+
+  Set serialPortAx = CreateObject("SerialPortAxControl.SerialPortAxControl")
+  serialPortAx.CreateSerialPort2 arduinoComPort, arduinoBaudRate, 120000, cacheKey
+  Set errorMsg = serialPortAx.OpenSerialPort()
+
+  if (errorMsg <> "OK") then
+    dlgResult = MachMsgReturnRetry
+    while dlgResult = MachMsgReturnRetry and errorMsg <> "OK"
+      dlgResult = MachMsg("Error establish connection with Arduino: " & errorMsg,  "Arduino serial port error", MachMsgTypeAbortRetryIgnore)
+      if dlgResult = MachMsgReturnAbort and enableEstop = 1 then 
+        DoOEMButton(1021)
+      end if
+      if dlgResult = MachMsgReturnRetry then 
+        Set errorMsg = serialPortAx.OpenSerialPort()
+      end if
+    wend
+  end if
+
+  if (errorMsg = "OK") then    
+    axis_i = 0
+    base_i = 0
+    Set errorMsg = serialPortAx.EnableJoystick(0, true)
+    while(axis_i < axisCount)
+      base_i = axis_i * axisVariablesCount
+      startPosValue = GetVar(axis_i + mach3AxisCurPosStartIndex)
+      'use 0.000001 for overwrite non zero default startPos with zero(0.000001) startPos
+      if (startPosValue = 0) then
+        startPosValue = axisSet(base_i + startPos)
+        SetVar(axis_i, axisSet(base_i + startPos))
+      end if
+      if (axisSet(base_i + inverse) = 1) then
+        inverseValue = true
+      else
+        inverseValue = false
+      end if
+      if (axisSet(base_i + estop) = 1) then
+        estopValue = true
+      else
+        estopValue = false
+      end if
+      
+      Set errorMsg = serialPortAx.CreateAxisSettings(axisSet(base_i + axis), axisSet(base_i + stepsPerMm), inverseValue, axisSet(base_i + speed), startPosValue, axisSet(base_i + axisMinValue), axisSet(base_i + axisMaxValue), axisSet(base_i + curPosNPeriod))
+      if (errorMsg = "AXISDISABLED") then
+        Set errorMsg = "OK"
+      else
+        if (errorMsg <> "OK") then
+          axis_i = axisCount
+        else
+          base_i = mach3AxisVariablesStartIndex + axis_i * moveMacrosVariablesCount
+  
+          SetVar(base_i + axis, axisSet(axis_i * axisVariablesCount + axis))
+          SetVar(base_i + stepsPerMm, axisSet(axis_i * axisVariablesCount + stepsPerMm))
+          SetVar(base_i + speed, axisSet(axis_i * axisVariablesCount + speed))
+          SetVar(base_i + curPosCheckPeriod, axisSet(axis_i * axisVariablesCount + curPosCheckPeriod))
+          SetVar(base_i + estop, axisSet(axis_i * axisVariablesCount + estop))
+          SetVar(base_i + moveTimeout, axisSet(axis_i * axisVariablesCount + moveTimeout))
+          SetVar(base_i + droNumber, axisSet(axis_i * axisVariablesCount + droNumber))
+          SetVar(base_i + droMultiplier, axisSet(axis_i * axisVariablesCount + droMultiplier))
+          SetVar(base_i + startPos, startPosValue)
+          SetVar(axis_i, startPosValue)
+        end if
+      end if
+      axis_i = axis_i + 1
+    wend    
+  end if
+  SetVar(mach3CommonVariablesStartIndex, 0)
+  SetVar(mach3CommonVariablesStartIndex + 1, -1)
+  SetVar(mach3CommonVariablesStartIndex + 2, -1)
+  
+  if (errorMsg <> "OK") then
+    MachMsg("Error initialize axis in arduino side: " & errorMsg,  "Arduino serial port error", MachMsgTypeOK)
+    if (dlgResult = MachMsgReturnAbort) then 
+      DoOEMButton(1021)
+    end if
+  else
+    MachMsg("Ready to move",  "Info", 0)
+  end if
+end if
