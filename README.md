@@ -6,6 +6,8 @@ Used hardware:
 
 -Usb cnc motion controller RNR 2, 4 axis(10$)
 
+-3 dm556 step motor drivers and 3 nema 23 step motors from cnc router
+
 -one joystick ky-023
 
 Software Requirements: windows 10(versions 7,8,11 not tested), .net 4.8, mach3(i tested version mach3.41). IDE development: vs2022 
